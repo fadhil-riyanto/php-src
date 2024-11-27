@@ -1201,6 +1201,17 @@ PHP_FUNCTION(min)
 	zval *args = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(1, -1)
+
+		/* 
+		Z_PARAM_VARIADIC(spec, dest, dest_num): 
+			Receives the rest arguments as an array of zvals. 
+			This macro must be the last one in the parameter 
+			passing block. The “spec” argument may be “*” 
+			(zero or more parameters) or “+” (one or more parameters). 
+			The address of the parameters array is stored in the C 
+			variable “dest” of type zval* and the number of parameters 
+			in the variable “dest_ num” of type “int.” 
+		*/
 		Z_PARAM_VARIADIC('+', args, argc)
 	ZEND_PARSE_PARAMETERS_END();
 
