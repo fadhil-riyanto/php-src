@@ -312,17 +312,21 @@ typedef struct {
 #define ZEND_TYPE_INIT_CLASS_CONST_MASK(class_name, type_mask) \
 	ZEND_TYPE_INIT_PTR_MASK(class_name, (_ZEND_TYPE_LITERAL_NAME_BIT | (type_mask)))
 
+
+/*
+	https://www.phpinternalsbook.com/php7/zvals/basic_structure.html
+*/
 typedef union _zend_value {
 	zend_long         lval;				/* long value */
 	double            dval;				/* double value */
 	zend_refcounted  *counted;
-	zend_string      *str;
-	zend_array       *arr;
-	zend_object      *obj;
-	zend_resource    *res;
-	zend_reference   *ref;
-	zend_ast_ref     *ast;
-	zval             *zv;
+	zend_string      *str;    			/* For IS_STRING */
+	zend_array       *arr;    			/* For IS_ARRAY */
+	zend_object      *obj;    			/* For IS_OBJECT */
+	zend_resource    *res;    			/* For IS_RESOURCE */
+	zend_reference   *ref;    			/* For IS_REFERENCE */
+	zend_ast_ref     *ast;    			/* For IS_CONSTANT_AST */
+	zval             *zv;     			/* For IS_INDIRECT */
 	void             *ptr;
 	zend_class_entry *ce;
 	zend_function    *func;
