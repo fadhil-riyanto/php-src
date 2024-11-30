@@ -317,7 +317,11 @@ typedef struct {
 	https://www.phpinternalsbook.com/php7/zvals/basic_structure.html
 */
 typedef union _zend_value {
-	zend_long         lval;				/* long value */
+	zend_long         lval;				/* long value 
+							 * 4 in 32 bit machine
+							 * 8 in 64 bit machine
+							*/
+
 	double            dval;				/* double value */
 	zend_refcounted  *counted;
 	zend_string      *str;    			/* For IS_STRING */
