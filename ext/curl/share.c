@@ -29,7 +29,7 @@
 #define SAVE_CURLSH_ERROR(__handle, __err) (__handle)->err.no = (int) __err;
 
 /* {{{ Initialize a share curl handle */
-PHP_FUNCTION(curl_share_init)
+PHP_FUNCTION(curl_share_init) /* zend_execute_data *execute_data, zval *return_value */
 {
 	php_curlsh *sh;
 
