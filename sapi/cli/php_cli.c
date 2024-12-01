@@ -13,6 +13,7 @@
    | Author: Edin Kadribasic <edink@php.net>                              |
    |         Marcus Boerger <helly@php.net>                               |
    |         Johannes Schlueter <johannes@php.net>                        |
+   |         Fadhil Riyanto <fadhil.riyanto@gnuweeb.org>                  |
    |         Parts based on CGI SAPI Module by                            |
    |         Rasmus Lerdorf, Stig Bakken and Zeev Suraski                 |
    +----------------------------------------------------------------------+
@@ -25,12 +26,15 @@
 #include "zend_hash.h"
 #include "zend_modules.h"
 #include "zend_interfaces.h"
+#include "sapi_debug_helper.h"
 
 #include "ext/reflection/php_reflection.h"
 
 #include "SAPI.h"
 
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
 #include "php.h"
 #ifdef PHP_WIN32
 #include "win32/time.h"
@@ -163,6 +167,7 @@ const opt_struct OPTIONS[] = {
 	/* Internal testing option -- may be changed or removed without notice,
 	 * including in patch releases. */
 	{16,  1, "repeat"},
+	{'L', 1, "sapi_loglevel"},
 	{'-', 0, NULL} /* end of args */
 };
 
@@ -1158,6 +1163,8 @@ int main(int argc, char *argv[])
 	char *ini_path_override = NULL;
 	struct php_ini_builder ini_builder;
 	int ini_ignore = 0;
+	char* log_level = NULL;
+
 	sapi_module_struct *sapi_module_ptr = &cli_sapi_module;
 
 	/*
@@ -1217,7 +1224,7 @@ int main(int argc, char *argv[])
 	_setmode(_fileno(stdout), O_BINARY);		/* make the stdio mode be binary */
 	_setmode(_fileno(stderr), O_BINARY);		/* make the stdio mode be binary */
 #endif
-
+	printf("linux platform\n");
 	php_ini_builder_init(&ini_builder);
 
 	while ((c = php_getopt(argc, argv, OPTIONS, &php_optarg, &php_optind, 1, 2))!=-1) {
@@ -1255,10 +1262,20 @@ int main(int argc, char *argv[])
 			case 'e': /* enable extended info output */
 				use_extended_info = 1;
 				break;
+			case 'L':
+				log_level = strdup(php_optarg);
+				printf("log level is set to %s\n", log_level);
+				
+				// sapi_module_ptr = &cli_server_sapi_module;
+				cli_server_sapi_module.sapi_loglevel = atoi(log_level);
+				free(log_level);
+				break;
 		}
 	}
 exit_loop:
-
+	/* show config struct */
+	sapi_cli_debug_config(&cli_server_sapi_module, 1);
+	
 	sapi_module_ptr->ini_defaults = sapi_cli_ini_defaults;
 	sapi_module_ptr->php_ini_path_override = ini_path_override;
 	sapi_module_ptr->phpinfo_as_text = 1;
