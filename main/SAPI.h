@@ -287,6 +287,7 @@ struct _sapi_module_struct {
 	const char *ini_entries;
 	const zend_function_entry *additional_functions;
 	unsigned int (*input_filter_init)(void);
+	unsigned int sapi_loglevel;
 };
 
 struct _sapi_post_entry {
