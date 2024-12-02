@@ -20,6 +20,6 @@
 #define SAPI_DEBUG_HELPER_H
 
 
-inline void __attribute__ ((visibility("default"))) sapi_cli_debug_config(sapi_module_struct *ptr, int enable);
+extern void sapi_cli_debug_config(sapi_module_struct *ptr, int enable);
 
 #endif

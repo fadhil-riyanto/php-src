@@ -16,10 +16,10 @@
 
 #include "sapi_debug_helper.h"
 
-inline void __attribute__ ((visibility("default"))) sapi_cli_debug_config(sapi_module_struct *ptr, int enable)
+void sapi_cli_debug_config(sapi_module_struct *ptr, int enable)
 {
         if (enable) {
-                printf("sapi_loglevel: %d", ptr->sapi_loglevel);
+                printf("`server api log level: %d\n", ptr->sapi_loglevel);
         }
         
 }

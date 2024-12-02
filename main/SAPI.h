@@ -338,6 +338,9 @@ END_EXTERN_C()
 	0,    /* phpinfo_as_text;        */ \
 	NULL, /* ini_entries;            */ \
 	NULL, /* additional_functions    */ \
-	NULL  /* input_filter_init       */
+	NULL, /* input_filter_init       */ \
+	0     /* sapi_loglevel */ 
+
+	/* nb: modern compiler don't allow null as non ptr value */
 
 #endif /* SAPI_H */

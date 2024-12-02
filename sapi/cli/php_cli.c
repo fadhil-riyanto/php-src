@@ -1264,7 +1264,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'L':
 				log_level = strdup(php_optarg);
-				printf("log level is set to %s\n", log_level);
+				// printf("log level is set to %s\n", log_level);
 				
 				// sapi_module_ptr = &cli_server_sapi_module;
 				cli_server_sapi_module.sapi_loglevel = atoi(log_level);
